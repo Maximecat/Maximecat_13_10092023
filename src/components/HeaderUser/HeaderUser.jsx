@@ -1,4 +1,3 @@
-
 import './HeaderUser.css';
 
 function HeaderUser(firstname, lastname) {
