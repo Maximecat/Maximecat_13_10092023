@@ -1,9 +1,11 @@
+import SignInForm from '../../components/SignInForm/SignInForm';
 import './SignIn.css';
 
 function SignIn() {
     return (
-        <div className="sign-in">
-        </div>
+        <main className="main bg-dark">
+            <SignInForm />
+        </main>
     );
 }
 
