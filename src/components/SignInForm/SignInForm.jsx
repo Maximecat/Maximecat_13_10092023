@@ -18,9 +18,10 @@ function SignInForm() {
                     <input type="checkbox" id="remember-me" />
                     <label for="remember-me">Remember me</label>
                 </div>
-                <button className="sign-in-button" type="submit" name="Login">
+                <a href="/profil" class="sign-in-button">Sign In</a>
+                {/* <button className="sign-in-button" type="submit" name="Login">
                     Sign In
-                </button>
+                </button> */}
             </form>
         </section>
     )
