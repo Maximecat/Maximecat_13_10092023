@@ -9,6 +9,7 @@ import { getUser } from '../../utils/services/ApiService';
 function Profil() {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+
     useEffect(() => {
         getUser(window.sessionStorage.getItem("token") || window.localStorage.getItem("token"))
             .then(res => {
