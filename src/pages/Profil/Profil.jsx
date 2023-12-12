@@ -1,22 +1,22 @@
+import './Profil.css';
 import BankAccountCard from '../../components/BankAccountCard/BankAccountCard';
 import HeaderUser from '../../components/HeaderUser/HeaderUser'
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
-import './Profil.css';
-import { useEffect, useState } from 'react';
-import { getUser } from '../../utils/services/ApiService';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAction } from '../../redux/actions/user.action';
 
 function Profil() {
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
+    const dispatch = useDispatch()
+
+    const firstName = useSelector((state) => state.user.firstName)
+    const lastName = useSelector((state) => state.user.lastName)
+    const token = useSelector((state) => state.auth.token)
+
 
     useEffect(() => {
-        getUser(window.sessionStorage.getItem("token") || window.localStorage.getItem("token"))
-            .then(res => {
-                console.log(res);
-                setFirstName(res.body.firstName)
-                setLastName(res.body.lastName)
-            })
+        dispatch(fetchAction({ token }))
     })
 
     return (
