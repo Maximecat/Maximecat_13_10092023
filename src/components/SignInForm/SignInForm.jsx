@@ -1,34 +1,28 @@
-// import { loginAction } from '../../redux/actions/auth.action';
-import { useState } from 'react';
-import { login } from '../../utils/services/ApiService';
-import { useNavigate } from 'react-router-dom';
 import './SignInForm.css'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction } from '../../redux/actions/auth.action';
 
 function SignInForm() {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-    const navigate = useNavigate()
+    const errorMessage = useSelector((state) => state.auth.errorMessage)
+    const token = useSelector((state) => state.auth.token)
+
+    useEffect(() => {
+        if (token) {
+            navigate("/profil")
+        }
+    }, [token, navigate])
 
     const submit = (e) => {
-        /* ici il faudra dispatch l'action de login */
         e.preventDefault()
-        console.log(email, password);
-        login(email, password)
-            .then(res => {
-                if (res.status === 200) {
-                    setErrorMessage("")
-                    if (rememberMe === true) {
-                        window.localStorage.setItem("token", res.body.token)
-                    } else {
-                        window.sessionStorage.setItem("token", res.body.token)
-                    }
-                    navigate("/profil")
-                } else if (res.status === 400) {
-                    setErrorMessage(res.message)
-                }
-            })
+        dispatch(loginAction({ email, password }))
     }
 
     return (
