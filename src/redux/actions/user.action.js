@@ -1,17 +1,19 @@
-import { createAction } from "@reduxjs/toolkit"
+import { createAsyncThunk } from "@reduxjs/toolkit"
+import { getUser } from "../../utils/services/ApiService";
 
-const fetchUserAction = createAction(
-    'user/get',
-    (userId) => ({
-        payload: { userId },
-    })
-);
 
-const updateUserAction = createAction(
-    'user/put',
-    (firstname, lastname) => ({
-        payload: { firstname, lastname },
-    })
-);
+const fetchAction = createAsyncThunk(
+    'user/fetch',
+    async ({ token }, thunkApi) => {
+        const res = await getUser(token)
+        if (res.status === 200) {
+            console.log('fetch reussi', token)
+            return res.body
+        } else {
+            console.log('fetch raté', token)
+            return thunkApi.rejectWithValue(res.message)
+        }
+    }
+)
 
-export { fetchUserAction, updateUserAction }
+export { fetchAction }
