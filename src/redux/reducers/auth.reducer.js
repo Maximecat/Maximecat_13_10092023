@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginAction } from "../actions/auth.action";
+import { loginAction, logoutAction } from "../actions/auth.action";
 
 const initialState = {
     rememberMe: false,
@@ -20,10 +20,12 @@ const authSlice = createSlice({
             })
             .addCase(loginAction.fulfilled, (state, action) => {
                 console.log("fulfilled");
-                window.localStorage.setItem("token", action.payload.token)
+                if (action.payload.rememberMe) {
+                    window.localStorage.setItem("token", action.payload.body.token)
+                }
                 state.errorMessage = ""
                 state.loading = false
-                state.token = action.payload.token
+                state.token = action.payload.body.token
                 console.log({ ...state });
             })
             .addCase(loginAction.rejected, (state, action) => {
@@ -31,6 +33,10 @@ const authSlice = createSlice({
                 state.errorMessage = action.payload
                 state.loading = false
                 console.log({ ...state });
+            })
+            .addCase(logoutAction, (state, action) => {
+                state.token = ""
+                window.localStorage.clear()
             })
     }
 })
