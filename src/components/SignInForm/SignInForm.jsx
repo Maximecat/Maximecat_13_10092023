@@ -11,9 +11,10 @@ function SignInForm() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(false)
-    const errorMessage = useSelector((state) => state.auth.errorMessage)
-    const token = useSelector((state) => state.auth.token)
+    const errorMessage = useSelector((state) => state.auth.errorMessage) // Ecoute le message d'erreur du store
+    const token = useSelector((state) => state.auth.token) // Ecoute le token du store
 
+    // Depend de la modification du token
     useEffect(() => {
         if (token) {
             navigate("/profil")
@@ -22,7 +23,7 @@ function SignInForm() {
 
     const submit = (e) => {
         e.preventDefault()
-        dispatch(loginAction({ email, password, rememberMe }))
+        dispatch(loginAction({ email, password, rememberMe })) // dispatch l'action de login avec les informations du formulaire
     }
 
     return (
