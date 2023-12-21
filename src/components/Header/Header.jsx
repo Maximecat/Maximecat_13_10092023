@@ -8,8 +8,9 @@ function Header() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const firstName = useSelector((state) => state.user.firstName)
+    const firstName = useSelector((state) => state.user.firstName) // Permet de mettre à jour le nom automatiquement grâce au store
     const token = useSelector((state) => state.auth.token)
+
     const logout = () => {
         if (token) {
             dispatch(logoutAction())
