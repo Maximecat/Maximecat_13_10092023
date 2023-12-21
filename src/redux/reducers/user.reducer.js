@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAction } from "../actions/user.action";
+import { fetchAction, updateAction } from "../actions/user.action";
 
 const initialState = {
     firstName: "",
@@ -29,7 +29,24 @@ const userSlice = createSlice({
                 state.errorMessage = action.payload
                 console.log({ ...state });
             })
+            .addCase(updateAction.pending, (state) => {
+                console.log("pending");
+                console.log({ ...state });
+            })
+            .addCase(updateAction.fulfilled, (state, action) => {
+                console.log("fulfilled");
+                console.log(action.payload)
+                state.firstName = action.payload.firstName
+                state.lastName = action.payload.lastName
+                state.errorMessage = ""
+                console.log({ ...state });
+            })
+            .addCase(updateAction.rejected, (state, action) => {
+                console.log("rejected");
+                state.errorMessage = action.payload
+                console.log({ ...state });
+            })
     }
 })
 
-export default userSlice.reducer
+export default userSlice.reducer;
