@@ -1,32 +1,25 @@
 import './HeaderUser.css';
 import { useState } from 'react';
-import { updateUser } from '../../utils/services/ApiService';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateAction } from '../../redux/actions/user.action';
 
 function HeaderUser({ firstname, lastname }) {
+    const dispatch = useDispatch()
+
     const [displayForm, setDisplayForm] = useState(false)
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
-    const [error, setError] = useState("")
+    const error = useSelector((state) => state.user.errorMessage)
+    const token = useSelector((state) => state.auth.token)
 
-    const editOrCancel = (e) => {
+    const editOrCancel = () => {
         setDisplayForm(!displayForm)
-        // console.log(firstname, lastname);
-        console.log(displayForm);
     }
 
     const saveNewName = (e) => {
-        console.log("Nouveau nom et prénom sauvegarder");
-        console.log(firstName, lastName);
-        updateUser(window.sessionStorage.getItem("token") || window.localStorage.getItem("token"), { firstName, lastName })
-            .then(res => {
-                console.log(res);
-                setFirstName(res.body.firstName)
-                setLastName(res.body.lastName)
-                setDisplayForm(false)
-            })
-            .catch(() => {
-                setError("An error occured")
-            })
+        e.preventDefault()
+        dispatch(updateAction({ token, firstName, lastName }))
+        setDisplayForm(false)
     }
 
     return (
