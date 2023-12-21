@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { getUser } from "../../utils/services/ApiService";
+import { getUser, updateUser } from "../../utils/services/ApiService";
 
 
 const fetchAction = createAsyncThunk(
@@ -16,4 +16,18 @@ const fetchAction = createAsyncThunk(
     }
 )
 
-export { fetchAction }
+const updateAction = createAsyncThunk(
+    'user/update',
+    async ({ token, firstName, lastName }, thunkApi) => {
+        const res = await updateUser(token, { firstName, lastName })
+        if (res.status === 200) {
+            console.log('update reussi', token, { firstName, lastName })
+            return res.body
+        } else {
+            console.log('update raté', token, { firstName, lastName })
+            return thunkApi.rejectWithValue(res.message)
+        }
+    }
+)
+
+export { fetchAction, updateAction }
