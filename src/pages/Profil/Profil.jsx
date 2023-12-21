@@ -6,18 +6,26 @@ import Footer from '../../components/Footer/Footer'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAction } from '../../redux/actions/user.action';
+import { useNavigate } from 'react-router-dom';
 
 function Profil() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const firstName = useSelector((state) => state.user.firstName)
     const lastName = useSelector((state) => state.user.lastName)
     const token = useSelector((state) => state.auth.token)
-
+    const errorMessage = useSelector((state) => state.user.errorMessage)
 
     useEffect(() => {
         dispatch(fetchAction({ token }))
     })
+
+    useEffect(() => {
+        if (errorMessage) {
+            navigate("/")
+        }
+    }, [errorMessage, navigate])
 
     return (
         <>
