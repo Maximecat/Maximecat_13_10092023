@@ -1,18 +1,18 @@
-import { createAsyncThunk } from "@reduxjs/toolkit"
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit"
 import { login } from "../../utils/services/ApiService";
 
 const loginAction = createAsyncThunk(
     'auth/login',
-    async ({ email, password }, thunkApi) => {
+    async ({ email, password, rememberMe }, thunkApi) => {
         const res = await login(email, password)
         if (res.status === 200) {
-            console.log('reussite', email, password)
-            return res.body
+            return { body: res.body, rememberMe }
         } else {
-            console.log('echec', email, password)
             return thunkApi.rejectWithValue(res.message)
         }
     }
 );
 
-export { loginAction }
+const logoutAction = createAction('auth/logout')
+
+export { loginAction, logoutAction }
