@@ -22,7 +22,7 @@ function SignInForm() {
 
     const submit = (e) => {
         e.preventDefault()
-        dispatch(loginAction({ email, password }))
+        dispatch(loginAction({ email, password, rememberMe }))
     }
 
     return (
@@ -32,16 +32,16 @@ function SignInForm() {
             <p>{errorMessage}</p>
             <form onSubmit={submit}>
                 <div className="input-wrapper">
-                    <label for="username">Username</label>
+                    <label htmlFor="username">Username</label>
                     <input type="text" id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="input-wrapper">
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="input-remember">
                     <input type="checkbox" id="remember-me" value={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
-                    <label for="remember-me">Remember me</label>
+                    <label htmlFor="remember-me">Remember me</label>
                 </div>
                 <button className="sign-in-button" type="submit" name="Login">
                     Sign In
