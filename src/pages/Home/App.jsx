@@ -1,9 +1,9 @@
-import HeroHeader from '../../components/HeroHeader/HeroHeader';
-import HomeInfo from '../../components/HomeInfo/HomeInfo';
 import './App.css';
 import iconChat from './icon-chat.png';
 import iconMoney from './icon-money.png';
 import iconSecurity from './icon-security.png';
+import HomeInfo from '../../components/HomeInfo/HomeInfo';
+import HeroHeader from '../../components/HeroHeader/HeroHeader';
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 
