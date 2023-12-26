@@ -26,11 +26,10 @@ function Header() {
                     src={argentBankLogo}
                     alt="Argent Bank Logo"
                 />
-                <h1 className="sr-only">Argent Bank</h1>
             </a>
             <div className='user-info'>
                 <span>{token ? firstName : ""}</span>
-                <a className="main-nav-item" href={token ? "#" : "/login"} onClick={logout}>
+                <a className="main-nav-item" href={token ? "/#" : "/login"} onClick={logout}>
                     <i className="fa fa-user-circle"></i>
                     {token ? "Sign Out" : "Sign In"}
                 </a>
